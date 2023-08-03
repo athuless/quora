@@ -1,0 +1,162 @@
+<style>
+  
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+}
+
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+h4 {
+  font-size: 16px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+em {
+  display: block;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+h5 {
+  font-size: 18px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 400px;
+  margin-right: 10px;
+}
+
+input[type="submit"] {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #555;
+}
+
+hr {
+  margin: 40px 0;
+  border: 0;
+  border-top: 1px solid #ccc;
+}
+
+.comment {
+  margin-bottom: 20px;
+}
+
+.comment-text {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.comment-author {
+  font-style: italic;
+  margin-top: 5px;
+  display: block;
+}
+
+.comment-time {
+  color: red;
+  font-size: 12px;
+}
+
+.comment-actions {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.comment-actions a {
+  margin-right: 10px;
+  color: #333;
+  text-decoration: none;
+}
+
+.comment-actions a:hover {
+  color: #555;
+}
+
+</style>
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+{{ blog.title }}
+<h4>{{ blog.author.first_name }}</h4>
+<!--{% if blog.cover_image %}
+<img src="{{ blog.cover_image.url}}" width="500px" height="300px" alt="">
+{% endif %}-->
+<br>
+<em>Genre - {{ blog.get_genre_display }}</em>
+<br>
+
+
+<h5>{{ blog.content }}</h5>
+
+
+{% if blog.author == request.user %}
+<a href="{% url 'edit' blog.id %}">edit</a><br>
+<a href="{% url 'delete' blog.id %}">delete</a><br>
+{% endif %}
+
+<form action="{%  if edit %}{% url 'comment_edit' cmd.id %}{% else %}{% url 'comment_post' blog.id %}{% endif %}" method="POST">
+    <p style="color: green;" >Your answer</p>
+    {% csrf_token %}
+    <input type="text" name="comment" value="{{  cmd.text }}">
+    <input type="submit" name="Post">
+    
+</form>
+{% for comment in comments %}
+    {% if comment != cmd %}
+        {{ comment.text }}<br>
+     -    {{ comment.comment_author.first_name }}<br>
+     <span style="color: red;">posted on:{{ comment.created}} <br>
+    </span> updated on : {{ comment.updated | date:"d-M-Y-D" }}<br>
+
+    {% if request.user == comment.comment_author %}
+
+        <a href="{% url 'comment_delete' comment.id %}">Delete</a><br>
+        <a href="{% url 'comment_edit' comment.id %}">Edit </a>
+{% endif %}
+<hr>
+
+{% endif %}
+{% endfor %}
+
+{% endblock content %}

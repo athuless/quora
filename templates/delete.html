@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+Are your sure you wanna delete "{{article.title}}" ?
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="confirm">
+</form>
+
+{% endblock content %}
+

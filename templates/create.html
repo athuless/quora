@@ -1,0 +1,92 @@
+<html>
+    <head>
+        <style>
+            /* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Form styles */
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    margin-bottom: 5px;
+}
+
+form input[type="text"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+form select {
+    height: 40px;
+}
+
+form input[type="file"] {
+    margin-bottom: 20px;
+}
+
+form input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+
+        </style>
+    </head>
+<body>
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Question</label>
+    <input type="text" name="t"><br>
+    
+  
+    <label>Your answer</label>
+    <textarea name="c"></textarea><b>
+    <input type="file" name="cover_image" accept="image/*"><br>
+    <input type="submit" value="Add">
+</form>
+
+{% endblock content %}
+</body>
+</html>

@@ -1,0 +1,83 @@
+<style>
+   
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  width: 90%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+input[type="submit"] {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #555;
+}
+
+span {
+  display: block;
+  margin-top: 5px;
+  color: red;
+}
+
+
+
+</style>
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+<form  method="post" >
+    {% csrf_token %}
+    <label>Username</label>
+    <input type="text" name="username"><br>
+    <label>Firstname</label>
+    <input type="text" name="firstname"><br>
+    <label>Email</label>
+    <input type="email" name="email"><br>
+    <label>Password</label>
+    <input type="password" name="password1"><br>
+    <label>Confirm Password</label>
+    <input type="password" name="password2"><br>
+    <input type="submit" value="register">
+</form>
+{% for msg in messages %}
+<span style="color: red;">{{ msg }}</span>
+{% endfor %}
+
+{% endblock content %}

@@ -1,0 +1,106 @@
+
+<html>
+    <head>
+        <style>
+            /* Reset some default styles */
+body, h1, h2, h3, p, a {
+    margin: 0;
+    padding: 0;
+}
+
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Header styles */
+header {
+    background-color: #f9f9f9;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header a {
+    margin-right: 10px;
+}
+
+/* Navigation styles */
+nav {
+    margin-bottom: 20px;
+}
+
+nav a {
+    margin-right: 20px;
+}
+
+/* User section styles */
+.user-section {
+    display: flex;
+    align-items: center;
+}
+
+.user-section a {
+    margin-right: 10px;
+}
+
+/* Main content styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Additional styles for the content area specific to each page (e.g., Quora content) */
+/* Add your custom styles here for the individual pages that extend the base template. */
+
+        </style>
+    </head>
+    <body>
+        <h1>Quora</h1>
+<a href="{% url 'create'  %}">+New</a><br>
+<a href="{% url 'index' %}">Home</a><br>
+
+
+{% if request.user.is_authenticated %}
+<a href="{% url 'logout_user' %}">Logout</a>
+
+
+
+{% else %}
+<a href="{% url 'register'  %}">Register</a><br>
+<a href="{% url 'login_user' %}">Login</a>
+{% endif %}
+
+
+{% if request.user.is_authenticated %}
+{{ request.user.first_name }}
+{% endif %}
+
+
+<hr>
+
+
+
+{% block content %}
+{% endblock content %}
+    </body>
+</html>
+
+
